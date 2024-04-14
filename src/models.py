@@ -1,8 +1,13 @@
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field as SQLModelField, SQLModel
+from pydantic import BaseModel, Field as PydanticField
 
 
 class TarefaModel(SQLModel, table=True):
-    id: int = Field(primary_key=True, default=None)
+    id: int = SQLModelField(primary_key=True, default=None)
     titulo: str
     descricao: str
-    completado: bool = Field(default=False)
+    completado: bool = SQLModelField(default=False)
+
+
+class RespostaOla(BaseModel):
+    mensagem: str = PydanticField(examples=["Olá Gabriel"])

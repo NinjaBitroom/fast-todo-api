@@ -1,24 +1,11 @@
-from typing import Literal, TypedDict
-
 from fastapi import FastAPI, Form
 from sqlmodel import Session
 
 from src.db import engine
-from src.models import TarefaModel
+from src.models import RespostaOla, TarefaModel
+from src.dicts import RespostaOlaMundo, RespostaTarefaDeletada
 
 app = FastAPI()
-
-
-class RespostaOlaMundo(TypedDict):
-    mensagem: Literal["Olá Mundo!"]
-
-
-class RespostaOla(TypedDict):
-    mensagem: str
-
-
-class RespostaTarefaDeletada(TypedDict):
-    mensagem: Literal["Tarefa deletada com sucesso!"]
 
 
 @app.get("/")
@@ -30,7 +17,7 @@ def raiz() -> RespostaOlaMundo:
 @app.get("/ola/{nome}")
 def falar_ola(nome: str) -> RespostaOla:
     """Olá!"""
-    return {"mensagem": f"Olá {nome}"}
+    return RespostaOla(mensagem=f"Olá {nome}")
 
 
 @app.post("/tarefa/")
